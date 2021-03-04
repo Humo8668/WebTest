@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
+	<script type="text/javascript">
+		function changeType() {
+			if($(".field_type").val() == "1")
+				$(".i1").attr("type", "text");
+			else
+				$(".i1").attr("type", "file");
+		}
+	</script>
+
+	<select class="field_type form-control" onchange=changeType()>
+    <option selected value="1">Key-Value</option>
+    <option value="2">File</option>
+  </select>
+
+	<input type="text" name="i1" class="i1">
+</body>
+</html>
