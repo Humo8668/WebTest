@@ -23,20 +23,20 @@
 					  <div class="form-group">
 					  	<div class="form-row">
 					  		<div class="form-group col-2">
-							    <select id="query_type" class="form-control">
-						        <option selected>GET</option>
-						        <option>POST</option>
-						        <option>PUT</option>
-						        <option>DELETE</option>
+							    <select id="method" class="form-control">
+						        <option selected value="GET">GET</option>
+						        <option value="POST">POST</option>
+						        <option value="PUT">PUT</option>
+						        <option value="DELETE">DELETE</option>
 						      </select>
 						    </div>
 
 						    <div class="form-group col-8">
-									<input type="text" class="form-control" placeholder="Enter request URL">
+									<input type="text" class="form-control" id="URL" placeholder="Enter request URL">
 							  </div>
 
 							  <div class="form-group col-2">
-							  	<input type="button" class="btn btn-primary" name="send_request" value="Send >>>" style="width: 100%;">
+							  	<input type="button" class="btn btn-primary" id="send_request" value="Send >>>" style="width: 100%;">
 							  </div>
 
 						  </div>
@@ -63,10 +63,10 @@
 							  <div class="tab-pane fade show active key_value_block" id="params-tab" role="tabpanel" aria-labelledby="params-tab">
 							  	<div class="entry input-group col-xs-3">
 							  		<div class="form-group col-4">
-                    	<input class="form-control entry_key" name="params_keys[]" type="text" placeholder="Key" />
+                    	<input class="form-control entry_key" name="params_key" type="text" placeholder="Key" />
                     </div>
                     <div class="form-group col-6">
-                    	<input class="form-control entry_value" name="params_values[]" type="text" placeholder="Value" />
+                    	<input class="form-control entry_value" name="params_value" type="text" placeholder="Value" />
                   	</div>
                   	<div class="form-group col-2">
                   		<span class="input-group-btn">
@@ -79,10 +79,10 @@
 							  <div class="tab-pane fade key_value_block" id="headers-tab" role="tabpanel" aria-labelledby="headers-tab">
 							  	<div class="entry input-group col-xs-3">
 							  		<div class="form-group col-4">
-                    	<input class="form-control entry_key" name="headers_keys[]" type="text" placeholder="Key" />
+                    	<input class="form-control entry_key" name="headers_key" type="text" placeholder="Key" />
                     </div>
                     <div class="form-group col-6">
-                    	<input class="form-control entry_value" name="headers_values[]" type="text" placeholder="Value" />
+                    	<input class="form-control entry_value" name="headers_value" type="text" placeholder="Value" />
                   	</div>
                   	<div class="form-group col-2">
                   		<span class="input-group-btn">
@@ -95,12 +95,12 @@
 							  <div class="tab-pane fade" id="body-tab" role="tabpanel" aria-labelledby="body-tab">
 							  	<div class="row justify-content-center">
 							  		<div class="col-2">
-										  <input class="form-check-input" type="radio" name="content-type" id="body_none" value="body_none_block">
+										  <input class="form-check-input" type="radio" name="content-type" id="body_none" value="body_none_block" checked>
 										  <label class="form-check-label" for="body_none">none</label>
 										</div>
 
 										<div class="col-2">
-										  <input class="form-check-input" type="radio" name="content-type" id="body_form-data" value="body_form-data_block" checked>
+										  <input class="form-check-input" type="radio" name="content-type" id="body_form-data" value="body_form-data_block" >
 										  <label class="form-check-label" for="body_form_data">form-data</label>
 										</div>
 
@@ -134,6 +134,26 @@
 												<button class="btn btn-success btn-add col-1" type="button">+</button>
 											</div>
 										</div>
+
+										<div class="col-12 key_value_block" id="body_x-www-form-urlen_block">
+											<div class="form-row entry">
+												<input type="text" class="col-4 form-control" name="body_x-www-form-urlen_key" placeholder="Key">
+												<input type="text" class="col-5 form-control" name="body_x-www-form-urlen_value" placeholder="Value">
+												<button class="btn btn-success btn-add col-1" type="button">+</button>
+											</div>
+										</div>
+
+										<div class="col-12 key_value_block" id="body_raw_block">
+											<div class="form-row">
+												<textarea name="body_raw_value" class="form-control" style="resize: none;" rows=12></textarea>
+											</div>
+										</div>
+
+										<div class="col-12 key_value_block" id="body_binary_block">
+											<div class="form-row">
+												<input type="file" name="body_binary_value" class="form-control">
+											</div>
+										</div>
 									</div>
 							  </div>
 
@@ -144,9 +164,13 @@
 			</div>
 		</div>
 
-
 		<script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
 		<script type="text/javascript" src="js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="js/script.js"></script>
+
+		<script type="text/javascript">
+			showBodyBlock("body_none_block");
+		</script>
+
 	</body>
 </html>
