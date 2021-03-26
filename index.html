@@ -19,7 +19,7 @@
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-12">
-					<form id="request_form">
+					<form id="request-form">
 					  <div class="form-group">
 					  	<div class="form-row">
 					  		<div class="form-group col-2">
@@ -129,29 +129,29 @@
 									        <option selected value="text">Type: Text</option>
 									        <option value="file">Type: File</option>
 									      </select>
-												<input type="text" class="col-4 form-control" name="body_form-data_key" placeholder="Key">
-												<input type="text" class="col-5 form-control" name="body_form-data_value" placeholder="Value">
+												<input type="text" class="col-4 form-control key_field" name="body_form-data_key" placeholder="Key">
+												<input type="text" class="col-5 form-control value_field" name="body_form-data_value" placeholder="Value">
 												<button class="btn btn-success btn-add col-1" type="button">+</button>
 											</div>
 										</div>
 
 										<div class="col-12 key_value_block" id="body_x-www-form-urlen_block">
 											<div class="form-row entry">
-												<input type="text" class="col-4 form-control" name="body_x-www-form-urlen_key" placeholder="Key">
-												<input type="text" class="col-5 form-control" name="body_x-www-form-urlen_value" placeholder="Value">
+												<input type="text" class="col-4 form-control key_field" name="body_x-www-form-urlen_key" placeholder="Key">
+												<input type="text" class="col-5 form-control value_field" name="body_x-www-form-urlen_value" placeholder="Value">
 												<button class="btn btn-success btn-add col-1" type="button">+</button>
 											</div>
 										</div>
 
 										<div class="col-12 key_value_block" id="body_raw_block">
 											<div class="form-row">
-												<textarea name="body_raw_value" class="form-control" style="resize: none;" rows=12></textarea>
+												<textarea name="body_raw_value" class="form-control value_field" style="resize: none;" rows=12></textarea>
 											</div>
 										</div>
 
 										<div class="col-12 key_value_block" id="body_binary_block">
 											<div class="form-row">
-												<input type="file" name="body_binary_value" class="form-control">
+												<input type="file" name="body_binary_value" class="form-control value_field">
 											</div>
 										</div>
 									</div>
@@ -160,6 +160,13 @@
 							</div>
 						</div>
 					</form>
+				</div>
+				<div class="col-12">
+					<div id="response-block">
+						<textarea id="response-field" class="form-control" value="" disabled>
+							
+						</textarea>
+					</div>
 				</div>
 			</div>
 		</div>

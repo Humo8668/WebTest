@@ -66,7 +66,8 @@ function showBodyBlock(blockToShow)
 function getHeaderAsObject()
 {
     var headers = {};
-    $("#headers-tab").each(function(i, elem){
+    headers["Access-Control-Allow-Origin"] = "https://reqbin.com";
+    $("#headers-tab>div").each(function(i, elem){
         var key = $(":input[name='headers_key']", elem).val();
         var value = $(":input[name='headers_value']", elem).val();
         if (key.length == 0)
@@ -80,15 +81,99 @@ function getHeaderAsObject()
 function getParamsAsObject()
 {
     var params = {};
-    $("#params-tab").each(function(i, elem){
+    $("#params-tab>div").each(function(i, elem){
         var key = $(":input[name='params_key']", elem).val();
-        var value = $(":input[name='headers_value']", elem).val();
+        var value = $(":input[name='params_value']", elem).val();
         if (key.length == 0)
             return; // continue;
             //return false; // break;
         params[key] = value;
     });
-    return headers;
+    return params;
+}
+
+function getReqBody()
+{
+    var bodyBlockName = $("#body-tab input[name='content-type']:checked")[0].value;
+    var bodyBlock = $("#" + bodyBlockName)[0];
+
+    if (bodyBlockName.length == 0 || bodyBlock == null || typeof bodyBlock === 'undefined')
+        return {};
+    
+    switch(bodyBlockName)
+    {
+        case "body_none_block":
+            return {};
+        case "body_raw_block":
+            return ($(".value_field", bodyBlock)[0].value + "");
+        case "body_binary_block":
+            {
+                throw "Binary file posting not working. Please, try some other option.";
+                return;
+
+                /*var val_field = $("input.value_field" ,elem)[0];
+                if(typeof val_field !== 'undefined')
+                    return {};
+                var value = null;
+                if (val_field.type.toLowerCase() == "file")
+                    value = val_field.files[0];
+                else
+                    value = val_field.value;
+                
+                return value;*/
+            }
+        case "body_form-data_block":
+            {
+                var fd = new FormData();
+                $("div", bodyBlock).each(function(i, elem) {
+                    var key = $("input.key_field" ,elem)[0].value;
+                    var val_field = $("input.value_field" ,elem)[0];
+                    var value = null;
+                    if (val_field.type.toLowerCase() == "file")
+                        value = val_field.files[0];
+                    else
+                        value = val_field.value;
+
+                    if(typeof key !== 'undefined' && key.length > 0)
+                        fd.append(key, value);
+                });
+                return fd;
+            }
+        case "body_x-www-form-urlen_block":
+            {
+                var data = {};
+                $("div", bodyBlock).each(function(i, elem) {
+                    var key = $("input.key_field" ,elem)[0].value;
+                    var value = $("input.value_field" ,elem)[0].value;
+                    
+                    if(typeof key !== 'undefined' && key.length > 0)
+                        data[key] = value;
+                });
+                return data;
+            }
+
+    }
+}
+
+
+function beforeSend(jqXHR, settings)
+{
+    console.log("Requesting...");
+}
+
+function onSuccess(data, textStatus, jqXHR)
+{
+    console.log("Success. Response: " + data);
+}
+
+function onError(jqXHR, textStatus, errorThrown) 
+{
+    console.log("Error. " + errorThrown);
+}
+
+function onComplete(jqXHR, textStatus)
+{
+    console.log("Completed.");
 }
 
 $(document).on('click', '.btn-add', function(e)
@@ -146,6 +231,7 @@ $("#send_request").click(function () {
 
     ajax_obj['url'] = url;
     ajax_obj['method'] = method;
+    ajax_obj['headers'] = getHeaderAsObject();
     if(method == METHOD_GET)
     {
         ajax_obj['data'] = getParamsAsObject();
@@ -153,10 +239,17 @@ $("#send_request").click(function () {
     else
     {
         ajax_obj['contentType'] = contentType;
-        ajax_obj['data'] = "";
-        ajax_obj['headers'] = "";
+        ajax_obj['data'] = getReqBody();
     }
+    console.log(ajax_obj);
 
+    ajax_obj['beforeSend'] = beforeSend;
+    ajax_obj['success'] = onSuccess;
+    ajax_obj['error'] = onError;
+    ajax_obj['complete'] = onComplete;
+
+
+    $.ajax(ajax_obj);
 
     /*if(method == METHOD_GET)
     {

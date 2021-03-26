@@ -39,3 +39,42 @@
 {
     font-size: 12px;
 }
+
+#request-form
+{
+	width: 100%;
+  height: 400;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 10px;
+  border: dashed 5px #eee;
+}
+
+#response-block:before
+{
+  position: absolute;
+	top: -15px;
+  left: 40px;
+  content: "Response";
+  color: #a9a9a9;
+  font-size: 18pt;
+  background: white;
+  padding: 0 10px;
+}
+
+#response-block
+{
+	width: 100%;
+  height: 400;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 20px;
+  border: dashed 5px #eee;
+}
+
+#response-field
+{
+	width: 100%;
+	height: 100%;
+	resize: none;
+}
